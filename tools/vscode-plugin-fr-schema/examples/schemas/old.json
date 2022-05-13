@@ -1,0 +1,16 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "number": {
+        "title": "数字输入框",
+        "type": "number"
+      },
+      "checkbox": {
+        "title": "是否选择",
+        "type": "boolean",
+        "ui:widget": "switch"
+      }
+    }
+  }
+}
