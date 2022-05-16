@@ -35,6 +35,10 @@ const CardList = ({
         {displayList.map((item, idx) => {
           const fieldsProps = getFieldsProps(idx);
           fieldsProps.displayType = displayType;
+          const hideDelete =
+            !props.hideDelete &&
+            !(fieldsProps._item.schema.props.hideDeleteOnlyOne && listData.length === 1);
+
           return (
             <div
               className={`fr-card-item ${displayType === 'row' ? 'fr-card-item-row' : ''}`}
@@ -62,7 +66,7 @@ const CardList = ({
                     onClick={() => copyItem(idx)}
                   />
                 )}
-                {!props.hideDelete && (
+                {hideDelete && (
                   <Popconfirm
                     title="确定删除?"
                     onConfirm={() => deleteItem(idx)}
