@@ -12,6 +12,10 @@
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build"
   },
+  "files": [
+    "es",
+    "lib"
+  ],
   "main": "lib/index.js",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
