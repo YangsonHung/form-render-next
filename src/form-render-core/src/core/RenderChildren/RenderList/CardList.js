@@ -11,6 +11,7 @@ import {
 import { Button, Popconfirm } from 'antd';
 import React from 'react';
 import Core from '../../index';
+import { useStore } from '../../../hooks';
 
 const CardList = ({
   displayList = [],
@@ -26,8 +27,8 @@ const CardList = ({
   getFieldsProps,
 }) => {
   const [visible, setVisible] = React.useState({});
+  const { flatten } = useStore();
   const { props = {}, itemProps } = schema;
-
   let addBtnProps = {
     type: 'dashed',
     children: '新增一条',
@@ -46,6 +47,14 @@ const CardList = ({
           const hideDelete =
             !props.hideDelete &&
             !(fieldsProps._item.schema.props.hideDeleteOnlyOne && listData.length === 1);
+          const targetChild = flatten[fieldsProps._item.children[0]];
+          const itemTitle = fieldsProps._item.schema.props.itemTitle
+            ? fieldsProps._item.schema.props.itemTitle
+            : fieldsProps._item.schema.props.useFirstChildFieldNameAsTitle
+            ? targetChild && targetChild.schema
+              ? targetChild.schema.title
+              : ''
+            : '';
 
           return (
             <div
@@ -53,6 +62,7 @@ const CardList = ({
               key={idx}
             >
               <div className="fr-card-index">{idx + 1}</div>
+              {itemTitle && <div className="fr-card-item-title">{itemTitle}</div>}
               {!visible[idx] && <Core {...fieldsProps} />}
               <div direction="horizontal" className="fr-card-toolbar">
                 {fieldsProps._item.schema.props.foldable &&
