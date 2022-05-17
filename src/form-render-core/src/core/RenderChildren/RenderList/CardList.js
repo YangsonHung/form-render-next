@@ -1,6 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 // import ArrowDown from '../../../components/ArrowDown';
-import { ArrowDownOutlined, ArrowUpOutlined, CloseOutlined, CopyOutlined } from '@ant-design/icons';
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  CloseOutlined,
+  CopyOutlined,
+  RightOutlined,
+  DownOutlined,
+} from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
 import React from 'react';
 import Core from '../../index';
@@ -18,6 +25,7 @@ const CardList = ({
   displayType,
   getFieldsProps,
 }) => {
+  const [visible, setVisible] = React.useState({});
   const { props = {}, itemProps } = schema;
 
   let addBtnProps = {
@@ -45,9 +53,20 @@ const CardList = ({
               key={idx}
             >
               <div className="fr-card-index">{idx + 1}</div>
-              <Core {...fieldsProps} />
-
+              {!visible[idx] && <Core {...fieldsProps} />}
               <div direction="horizontal" className="fr-card-toolbar">
+                {fieldsProps._item.schema.props.foldable &&
+                  (!visible[idx] ? (
+                    <DownOutlined
+                      style={{ fontSize: 16, marginLeft: 4, cursor: 'pointer' }}
+                      onClick={() => setVisible((e) => ({ ...visible, [idx]: !e[idx] }))}
+                    />
+                  ) : (
+                    <RightOutlined
+                      style={{ fontSize: 16, marginLeft: 4, cursor: 'pointer' }}
+                      onClick={() => setVisible((e) => ({ ...visible, [idx]: !e[idx] }))}
+                    />
+                  ))}
                 {!props.hideMove && (
                   <>
                     <ArrowUpOutlined
