@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 // import ArrowDown from '../../../components/ArrowDown';
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
 import { Button, Drawer, Popconfirm, Table } from 'antd';
 import React, { useRef } from 'react';
 import { useSet, useTools } from '../../../hooks';
@@ -25,6 +25,7 @@ const DrawerList = ({
   changeList,
   listData,
 }) => {
+  const [visible, setVisible] = React.useState(true);
   const { widgets } = useTools();
   const { props = {}, itemProps = {} } = schema;
   const { buttons, ...columnProps } = itemProps;
@@ -142,7 +143,14 @@ const DrawerList = ({
   return (
     <>
       <div className="w-100 mb2 tr">
-        {!props.hideAdd && (
+        <div className="fr-drawer-icon">
+          {visible ? (
+            <DownOutlined style={{ fontSize: 16 }} onClick={() => setVisible((e) => !e)} />
+          ) : (
+            <UpOutlined style={{ fontSize: 16 }} onClick={() => setVisible((e) => !e)} />
+          )}
+        </div>
+        {!props.hideAdd && visible && (
           <Button type="primary" size="small" onClick={handleAdd}>
             新增
           </Button>
@@ -191,22 +199,24 @@ const DrawerList = ({
           <Core {...fieldsProps} />
         </div>
       </Drawer>
-      <Table
-        size="small"
-        scroll={{ x: 'max-content' }}
-        columns={columns}
-        dataSource={dataSource}
-        rowClassName={(record, idx) => {
-          const index = record && record.$idx;
-          const hasError = errorFields.find(
-            (item) => item.name.indexOf(`${dataPath}[${index}]`) > -1,
-          );
-          return hasError ? 'fr-row-error' : '';
-        }}
-        rowKey="$idx"
-        pagination={paginationConfig}
-        {...rest}
-      />
+      {visible && (
+        <Table
+          size="small"
+          scroll={{ x: 'max-content' }}
+          columns={columns}
+          dataSource={dataSource}
+          rowClassName={(record, idx) => {
+            const index = record && record.$idx;
+            const hasError = errorFields.find(
+              (item) => item.name.indexOf(`${dataPath}[${index}]`) > -1,
+            );
+            return hasError ? 'fr-row-error' : '';
+          }}
+          rowKey="$idx"
+          pagination={paginationConfig}
+          {...rest}
+        />
+      )}
     </>
   );
 };
