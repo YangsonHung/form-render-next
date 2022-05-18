@@ -204,7 +204,6 @@ const DrawerList = ({
           return hasError ? 'fr-row-error' : '';
         }}
         rowKey="$idx"
-        size="small"
         pagination={paginationConfig}
         {...rest}
       />
