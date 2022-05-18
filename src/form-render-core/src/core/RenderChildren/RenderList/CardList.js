@@ -5,7 +5,7 @@ import {
   ArrowUpOutlined,
   CloseOutlined,
   CopyOutlined,
-  RightOutlined,
+  UpOutlined,
   DownOutlined,
 } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
@@ -72,7 +72,7 @@ const CardList = ({
                       onClick={() => setVisible((e) => ({ ...visible, [idx]: !e[idx] }))}
                     />
                   ) : (
-                    <RightOutlined
+                    <UpOutlined
                       style={{ fontSize: 16, marginLeft: 4, cursor: 'pointer' }}
                       onClick={() => setVisible((e) => ({ ...visible, [idx]: !e[idx] }))}
                     />
