@@ -1,0 +1,12 @@
+{
+  "extends": ["alloy", "alloy/react"],
+  "presets": ["@babel/preset-react"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  }
+}
