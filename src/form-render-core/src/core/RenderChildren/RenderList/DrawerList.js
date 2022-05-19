@@ -2,7 +2,7 @@ import { ArrowDownOutlined, ArrowUpOutlined, UpOutlined, DownOutlined } from '@a
 import { Button, Drawer, Popconfirm, Table } from 'antd';
 import React, { useRef } from 'react';
 import { useSet, useTools } from '../../../hooks';
-import { getDataPath, getDisplayValue, getKeyFromPath } from '../../../utils';
+import { getDataPath, getDisplayValue, getKeyFromPath, formatThousands } from '../../../utils';
 import Core from '../../index';
 import ErrorMessage from '../../RenderField/ErrorMessage';
 
@@ -80,7 +80,7 @@ const DrawerList = ({
     const { widgets } = useTools();
     const { props = {}, itemProps = {} } = schema;
     const { buttons, ...columnProps } = itemProps;
-    const { pagination = {}, ...rest } = props;
+    const { pagination = {}, foldable, ...rest } = props;
 
     const paginationConfig = pagination && {
         size: 'small',
@@ -215,13 +215,15 @@ const DrawerList = ({
     return (
         <>
             <div className="w-100 mb2 tr">
-                <div className="fr-drawer-icon">
-                    {visible ? (
-                        <DownOutlined style={{ fontSize: 16 }} onClick={() => setVisible(e => !e)} />
-                    ) : (
-                        <UpOutlined style={{ fontSize: 16 }} onClick={() => setVisible(e => !e)} />
-                    )}
-                </div>
+                {foldable && (
+                    <div className="fr-drawer-icon">
+                        {visible ? (
+                            <DownOutlined style={{ fontSize: 16 }} onClick={() => setVisible(e => !e)} />
+                        ) : (
+                            <UpOutlined style={{ fontSize: 16 }} onClick={() => setVisible(e => !e)} />
+                        )}
+                    </div>
+                )}
                 {!props.hideAdd && visible && (
                     <Button type="primary" size="small" onClick={handleAdd}>
                         新增
