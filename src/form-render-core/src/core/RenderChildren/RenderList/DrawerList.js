@@ -127,16 +127,14 @@ const DrawerList = ({
                           if (Object.is(value, null) || Object.is(value, undefined) || Object.is(value, '')) {
                               return '-';
                           }
+                          let _value = getDisplayValue(value, schema);
+                          if (_value && typeof _value === 'number' && !isNaN(_value)) {
+                              _value = formatThousands(_value);
+                          }
 
                           return (
                               <div>
-                                  <div>
-                                      {Widget ? (
-                                          <Widget value={value} schema={schema} />
-                                      ) : (
-                                          getDisplayValue(value, schema)
-                                      )}
-                                  </div>
+                                  <div>{Widget ? <Widget value={value} schema={schema} /> : _value}</div>
                                   {errorObj.error && <ErrorMessage message={errorObj.error} schema={schema} />}
                               </div>
                           );
