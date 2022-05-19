@@ -1,6 +1,6 @@
 {
   "name": "@clone-yangson/form-render-next",
-  "version": "1.9.15",
+  "version": "1.9.16",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
